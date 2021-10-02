@@ -137,7 +137,7 @@ Back to gitpod
 
 * Create env.py folder in root directory
     * import os  
-    os.environ.get["DATABASE_URL"] = "THE_LINK_YOU_JUST_COPIED_FROM_HEROKU"  
+    os.environ["DATABASE_URL"] = "THE_LINK_YOU_JUST_COPIED_FROM_HEROKU"  
     os.environ["SECRET_KEY"] = "makeOneUp"  
 
 * Add that secret key to heroku under config vars.  
@@ -163,6 +163,56 @@ Let's wire up the postgres database
 
 * Run migrations again and it should run. Check the postgres link under resources and 48 lines should have been created
 
+**Connect cloudinary**
+
+Cloudinary Setup
+* Visit the [Cloudinary website](https://cloudinary.com/)
+* Click on the Sign Up For Free button
+* Provide your name, email address and choose a password
+* For Primary interest, you can choose Programmable Media for image and video API
+* Optional: edit your assigned cloud name to something more memorable
+* Click Create Account
+* Verify your email and you will be brought to the dashboard
+
+Link to cloudinary  
+
+* Copy your api environment variable from the dashboard
+* Go to env.py 
+    * os.environ["CLOUDINARY_URL"] = "the_link_you_just_copied_without_the_first_bit"
+* Go to config vars on heroku
+    * Cretae cloudinary URL with your copied link
+    * Create temporary variable
+        * DISABLE_COLLECTSTATIC = 1
+* settings.py
+    * Installed apps
+        * 'cloudinary_storage'  
+        Above static files
+        * 'cloudinary'  
+        Below static files
+    * Under STATIC_URL
+        * STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'  
+        STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  
+        STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  
+        MEDIA_URL = '/media/'  
+        DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'   
+
+Tell Django where our templates will be 
+
+* settings.py
+    * under BASE_DIR
+        * TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
+    * TEMPLATES
+        * 'DIRS': [TEMPLATES_DIR]
+
+Add to allowed hosts
+
+* settings.py
+    * ALLOWED_HOSTS = ['django-blog-walkthrough.herokuapp.com', 'localhost']  
+
+Create 'static', 'media' and 'templates' folders in the main root directory  
+
+Create Procfile  
+* web: gunicorn myblog.wsgi
 
 </details>
 
