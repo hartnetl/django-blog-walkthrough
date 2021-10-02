@@ -185,9 +185,9 @@ Link to cloudinary
         * DISABLE_COLLECTSTATIC = 1
 * settings.py
     * Installed apps
-        * 'cloudinary_storage'  
+        * 'cloudinary_storage',    
         Above static files
-        * 'cloudinary'  
+        * 'cloudinary',    
         Below static files
     * Under STATIC_URL
         * STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'  
@@ -220,7 +220,109 @@ Go to heroku
 * Enable Automatic Deploys
 * Deploy branch
 
-</details>
+
+**note**  
+When I did this I got an error and when I checked the heroku logs it was a h10 error in relation to favicons.
+In the end I missed some commas in installed apps. 
+so BE CAREFUL
 
 </details>
 
+</details>
+
+
+
+<details>
+<summary><h1>LESSON 3: MODELS AND ADMIN</h1></summary>
+
+[CI videos](https://learn.codeinstitute.net/courses/course-v1:CodeInstitute+FST101+2021_T1/courseware/b31493372e764469823578613d11036b/09e0a94c7dbd4b969b8358a0cf5660b2/?child=first)
+
+Remember Django runs on a MTV framework.  
+M - model - database and structure  
+T - template - html pages our user sees  
+V - views - the logic that connects the two. The logic in our code that reads from or updates the model and then updates what the user sees.
+
+<details>
+<summary><h2>LESSON 3.1: Creating Database Diagram</h2></summary>
+<hr>
+
+* Move 3 of the user stories to user stories: manage posts, create drafts and approve comments
+* Build relationship model for database. Imagine a blogpost, and the data you'll need for it  
+[link to onenote notes on this](https://onedrive.live.com/view.aspx?resid=AD7F40F390B59989%2110781&id=documents&wd=target%28blog%20walkthrough.one%7C871F9988-9AC4-4DB3-9672-E970CEC05F40%2FModels%20and%20admin%7C543D8EA0-8521-4270-B5C0-6FE9305720C4%2F%29)
+
+</details>
+
+<details>
+<summary><h2>LESSON 3.2: Creating Database Models</h2></summary>
+<hr>
+
+**Note:** If you're concerned that you may have made a typing error, then you can do a dry run of your migrations before you apply them to your database. The command to do this is:
+
+python3 manage.py makemigrations --dry-run
+
+This will print out the migrations, so you can check that everything is correct before proceeding.
+
+<hr>
+
+* models.py
+    * Create models for posts and comments  
+
+    from django.db import models  
+    from django.contrib.auth.models import User  
+    from cloudinary.models import CloudinaryField  
+
+        STATUS = ((0, "Draft"), (1, "Published"))  
+
+        class Post(models.Model):  
+            title = models.CharField(max_length=200, unique=True)  
+            slug = models.SlugField(max_length=200, unique=True)  
+            author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="blog_posts")  
+            updated_on = models.DateTimeField(auto_now=True)  
+            content = models.TextField()  
+            featured_image = CloudinaryField('image', default='placeholder')  
+            excerpt = models.TextField(blank=True)  
+            created_on = models.DateTimeField(auto_now_add=True)  
+            status = models.IntegerField(choices=STATUS, default=0)  
+            likes = models.ManyToManyField(User, related_name='blog_likes', blank=True)  
+
+        class Meta:  
+            ordering = ['-created_on']  
+
+        def __str__(self):  
+            return self.title  
+
+        def number_of_likes(self):  
+            return self.likes.count()  
+
+
+    class Comment(models.Model):  
+        post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')  
+        name = models.CharField(max_length=80)  
+        email = models.EmailField()  
+        body = models.TextField()  
+        created_on = models.DateTimeField(auto_now_add=True)  
+        approved = models.BooleanField(default=False)  
+
+        class Meta:  
+            ordering = ['created_on']  
+
+        def __str__(self):  
+            return f"Comment {self.body} by {self.name}"  
+
+
+* migrate change to database
+    * python3 manage.py makemigrations
+    * python3 manage.py migrate
+
+**note** If you make changes to this model, you'll have to make these migrations again  
+
+
+
+</details>
+
+<details>
+<summary><h2>LESSON 3.3 + 3.4 : Building the admin site</h2></summary>
+<hr>
+
+</details>
+</details>
