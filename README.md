@@ -324,5 +324,34 @@ This will print out the migrations, so you can check that everything is correct 
 <summary><h2>LESSON 3.3 + 3.4 : Building the admin site</h2></summary>
 <hr>
 
+[django list view](https://docs.djangoproject.com/en/3.1/ref/contrib/admin/#django.contrib.admin.ModelAdmin.changelist_view)
+[django search fields](https://docs.djangoproject.com/en/3.1/ref/contrib/admin/#django.contrib.admin.ModelAdmin.search_fields)
+[summernote](https://summernote.org/)
+[source code](https://github.com/Code-Institute-Solutions/Django3blog/tree/master/05_building_the_admin_site)
+
+<hr>
+
+create a superuser for the django admin panel
+ 
+ * Terminal
+    * python3 manage.py createsuperuser
+* Test it 
+    * python3 manage.py runserver
+    * Add "/admin" to the end of the url
+    * Sign in with the credentials you just made
+
+Add post model to admin panel 
+
+* admin.py
+    * from django.contrib import admin  
+from .models import Post  
+admin.site.register(Post)  
+
+You can now create posts in your admin panel  
+
+We're going to use a WYSIWYG or "what you see is what you get" editor for the post.  
+We're going to use a handy  library called Summernote. 
+
+
 </details>
 </details>
