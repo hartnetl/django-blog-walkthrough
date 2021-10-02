@@ -211,8 +211,11 @@ Add to allowed hosts
 
 Create 'static', 'media' and 'templates' folders in the main root directory  
 
-Create Procfile  
+Create Procfile   
 * web: gunicorn myblog.wsgi
+
+Go to heroku   
+* 
 
 </details>
 
