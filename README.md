@@ -215,7 +215,10 @@ Create Procfile
 * web: gunicorn myblog.wsgi
 
 Go to heroku   
-* 
+* Deploy tab
+* connect to github and the repository for the project
+* Enable Automatic Deploys
+* Deploy branch
 
 </details>
 
