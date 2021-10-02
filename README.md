@@ -352,6 +352,27 @@ You can now create posts in your admin panel
 We're going to use a WYSIWYG or "what you see is what you get" editor for the post.  
 We're going to use a handy  library called Summernote. 
 
+* Terminal
+    * pip3 install django-summernote
+    * pip3 freeze --local > requirements.txt
+* Add summernote to settings.py under INSTALLED_APPS, right above theblog
+    * 'django_summernote',
+* Set up summernote in urls.py
+    * add include to the django.urls import
+    * Add this to the urlpatterns
+        * path('summernote/', include('django_summernote.urls')),
+* Tell admin panel which field we want to use summernote for
+    * admin.py
+        * from django_summernote.admin import SummernoteModelAdmin  
+        class PostAdmin(SummernoteModelAdmin):  
+        summernote_fields = ('content')  
+* Register post admin to our admin site
+    * admin.py
+        * delete "admin.site.register(Post)"
+        * Add decorator to PostAdmin class
+            * @admin.register(Post)
+            * this will register both our post model and the post admin class with our admin site.
+
 
 </details>
 </details>
