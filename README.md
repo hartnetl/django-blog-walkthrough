@@ -324,7 +324,7 @@ This will print out the migrations, so you can check that everything is correct 
 <summary><h2>LESSON 3.3 + 3.4 : Building the admin site</h2></summary>
 <hr>
 
-[django list view](https://docs.djangoproject.com/en/3.1/ref/contrib/admin/#django.contrib.admin.ModelAdmin.changelist_view)
+[django list view](https://docs.djangoproject.com/en/3.1/ref/contrib/admin/#django.contrib.admin.ModelAdmin.list_display)
 [django search fields](https://docs.djangoproject.com/en/3.1/ref/contrib/admin/#django.contrib.admin.ModelAdmin.search_fields)
 [summernote](https://summernote.org/)
 [source code](https://github.com/Code-Institute-Solutions/Django3blog/tree/master/05_building_the_admin_site)
@@ -372,7 +372,33 @@ We're going to use a handy  library called Summernote.
         * Add decorator to PostAdmin class
             * @admin.register(Post)
             * this will register both our post model and the post admin class with our admin site.
+* migrate again
+    * python3 manage.py migrate
 
+Your admin panel should now have a blog text editor when you click add blog
+
+
+**We want the slug field to be generated automatically from the title**
+
+* admin.py
+    * To do this we're going to use the prepopulated_fields property.  
+     To use it, we pass in a dictionary that maps the field names to the fields that we want to 
+     populate from.   
+     In our case, we want to populate the slug field from the title field.  
+    * Add this above summernote_fields un the PostAdmin class
+        * prepopulated_fields = {'slug': ('title',)}
+
+If you now refresh the admin panel as you type the title it should populate the slug field
+
+**Add more functionality to our admin panel view**
+
+* admin.py
+    * Under prepoulated fields you can create a filter box in the admin panel
+        * list_filter = ('status', 'created_on')
+    * You can make a search bar to search title and content of posts
+        * search_fields = ['title', 'content']
+    * You can make a list display to choose which info is displayed for each post in the list
+        * list_display = ('title', 'slug', 'status', 'created_on')
 
 </details>
 </details>
