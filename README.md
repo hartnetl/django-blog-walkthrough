@@ -324,11 +324,11 @@ This will print out the migrations, so you can check that everything is correct 
 <summary><h2>LESSON 3.3 + 3.4 : Building the admin site</h2></summary>
 <hr>
 
-[django list view](https://docs.djangoproject.com/en/3.1/ref/contrib/admin/#django.contrib.admin.ModelAdmin.list_display)
-[django search fields](https://docs.djangoproject.com/en/3.1/ref/contrib/admin/#django.contrib.admin.ModelAdmin.search_fields)
-[summernote](https://summernote.org/)
-[source code](https://github.com/Code-Institute-Solutions/Django3blog/tree/master/05_building_the_admin_site)
-
+[django list view](https://docs.djangoproject.com/en/3.1/ref/contrib/admin/#django.contrib.admin.ModelAdmin.list_display)  
+[django search fields](https://docs.djangoproject.com/en/3.1/ref/contrib/admin/#django.contrib.admin.ModelAdmin.search_fields)  
+[summernote](https://summernote.org/)  
+[source code](https://github.com/Code-Institute-Solutions/Django3blog/tree/master/05_building_the_admin_site)  
+  
 <hr>
 
 create a superuser for the django admin panel
@@ -400,5 +400,31 @@ If you now refresh the admin panel as you type the title it should populate the 
     * You can make a list display to choose which info is displayed for each post in the list
         * list_display = ('title', 'slug', 'status', 'created_on')
 
+
+**Add comment admin model**
+
+* admin.py
+    * import Comment from .models
+    * @admin.register(Comment)  
+    class CommentAdmin(admin.ModelAdmin):  
+    list_filter = ('approved', 'created_on')  
+    search_fields = ['name', 'email', 'body']  
+    list_display = ('name', 'body', 'post', 'created_on', 'approved')  
+    summernote_fields = ('body')  
+
+
+**Comment approval**
+
+To do this, we use another built-in feature of the admin classes which is actions. The actions method allows you  
+to specify different actions that can be  performed from the action drop-down box.  
+The default action is just to delete the selected items but we want to add an approved comment section too. 
+
+* admin.py 
+* Add this to the end of the Comment Admin class
+    * actions = ['approve_comments']
+
+* Under that create your approve comments method
+    *  def approve_comments(self, request, queryset):  
+        queryset.update(approved=True)
 </details>
 </details>
