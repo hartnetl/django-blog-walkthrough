@@ -866,7 +866,48 @@ This will create a couple of directories, but we're intersted in the accounts on
 
     {% endblock %}
 
+**After:**
 
+    {% extends "base.html" %}
+
+    {% load i18n %}
+    {% load account socialaccount %}
+
+    {% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+    {% block content %}
+
+    <div class="container">
+    <div class="row">
+        <!-- mt-3 is a top margin; offset 2 centers this (because it's 8)-->
+        <div class="col-md-8 mt-3 offsset-md-2">
+        <h3>{% trans "Sign In" %}</h3>
+
+        <p>{% blocktrans %}Welcome back to the code|star blog. To leave a comment or like a post, please log in. If you
+            have not created an account yet, then <a class="link" href="{{ signup_url }}">sign up</a>
+            first.>sign up</a> first.{% endblocktrans %}</p>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 mt-3 offset-md-2">
+
+        <form class="login" method="POST" action="{% url 'account_login' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            {% endif %}
+            <button class="btn btn-signup right" type="submit">{% trans "Sign In" %}</button>
+        </form>
+
+        </div>
+    </div>
+    </div>
+
+    {% endblock %}
+    
 </details>
 
 <details>
