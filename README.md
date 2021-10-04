@@ -428,3 +428,74 @@ The default action is just to delete the selected items but we want to add an ap
         queryset.update(approved=True)
 </details>
 </details>
+
+
+
+<details>
+<summary><h1>LESSON 4: THE MAIN VIEWS</h1></summary>
+
+Views can be function based, like in Hello Django, or class based, as they will be here.  
+Class based can be reused, unlike with function based.  
+Django has some generic views (link in lesson 4.1) so you write less code.  
+
+<details>
+<summary><h2>LESSON 4.1: View creation checklist</h2></summary>
+
+[CI video](https://learn.codeinstitute.net/courses/course-v1:CodeInstitute+FST101+2021_T1/courseware/b31493372e764469823578613d11036b/c6a89f138afe4b209ee4fa6d6f1251a3/)  
+
+[Starter files](https://github.com/Code-Institute-Solutions/django-blog-starter-files)    
+
+[Django generic views](https://docs.djangoproject.com/en/3.2/topics/class-based-views/generic-display/)
+
+<hr>
+
+
+* Move "site pagination", "view post" and "view likes" to in progress on github projects
+
+Each time you make a new view you must do the following:
+1. Create the view code
+2. Create a template to render the view
+3. Connect up URLs in urls.py file
+
+
+**Create View for post list with pagination**  
+views.py
+* from django.views import generic  
+from .models import Post
+* class PostList(generic.ListView):  
+    We want to use the Post model  
+    model = Post  
+    queryset = Post.objects.filter(status=1).order_by('-created_on')  
+    template_name = 'index.html'  
+    paginate_by = 6  
+
+
+* Copy html templates from starter files link  
+**Note** the base.html page has the header, navigation and footer like Flask. Each
+page will be an extension of this.  
+
+</details>
+
+
+<details>
+<summary><h2>LESSON 4.2: Creating the first view</h2></summary>
+
+[CI video](https://learn.codeinstitute.net/courses/course-v1:CodeInstitute+FST101+2021_T1/courseware/b31493372e764469823578613d11036b/c6a89f138afe4b209ee4fa6d6f1251a3/)  
+[default image url](https://codeinstitute.s3.amazonaws.com/fullstack/blog/default.jpg)    
+[source code](https://github.com/Code-Institute-Solutions/Django3blog/tree/master/06_creating_our_first_view)  
+
+<hr>
+
+
+
+</details>
+
+
+<details>
+<summary><h2>LESSON 4.3 + 4.4:The Post Detail View</h2></summary>
+
+</details>
+
+
+
+</details>
