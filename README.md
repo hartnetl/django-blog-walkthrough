@@ -549,7 +549,27 @@ page will be an extension of this.
     {%endblock%}
 
 
-**Remember** {% %} indicates a control statement and {{ }} inserts the content into the html.
+**Remember** {% %} indicates a control statement and {{ }} inserts the content into the html.  
+List_view provides the is_paginated boolean, so can be freely copied and used  
+
+
+
+**Wire up URLs**  
+Create urls.py file in theblog directory  
+Go to it  
+
+    from . import views
+    from django.urls import path
+
+
+    urlpatterns = [
+        path('', views.PostList.as_view(), name='home')
+    ]
+
+Now import these URLs in the main URLs.py file in myblog directory  
+* Add this under urlpatterns
+    * path('', include('theblog.urls', name='theblog_urls')
+
 
 </details>
 
