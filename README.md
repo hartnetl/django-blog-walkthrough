@@ -584,6 +584,130 @@ Now import these URLs in the main URLs.py file in myblog directory
 * Move "site pagination", "view post" and "view likes" to complete on github projects
 * Move view comments and open a post to 'in progress'
 
+**Create PostDetail view**
+
+views.py
+* import get_object_or_404 from shortcuts
+* import view from views
+* Put this under the postlist class
+
+        class PostDetail(View):
+        
+            # This isn't a generic view, so we have to do everything ourselves
+
+            def get(self, request, slug, *args, **kwargs):
+                # Filter posts to those with the status as 1 (published)
+                queryset = Post.objects.filter(status=1)
+                # Get the published post with the right slug we're looking for
+                post = get_object_or_404(queryset, slug=slug)
+                # Get the comments of that post
+                comments = post.comments.filter(approved=True).order_by('created_on')
+                # if user liked the post before, let that show
+                liked = False
+                if post.likes.filter(id=self.request.user.id).exists():
+                    liked = True
+
+                # render it
+                return render(
+                    request,
+                    "post_detail.html",
+                    {
+                        "post": post,
+                        "comments": comments,
+                        "liked": liked
+                    },
+                )
+
+
+**Create PostDetail template in post_detail.html**
+
+* post_detail.html
+
+        {% extends 'base.html' %} {% block content %}
+
+        <div class="masthead">
+            <div class="container">
+                <div class="row g-0">
+                    <div class="col-md-6 masthead-text">
+                        <!-- Post title goes in these h1 tags -->
+                        <h1 class="post-title"> {{ post.title}}
+                        </h1>
+                        <!-- Post author goes before the | the post's created date goes after -->
+                        <p class="post-subtitle"> {{ post.author }} | {{ post.created_on }} </p>
+                    </div>
+                    <div class="d-none d-md-block col-md-6 masthead-image">
+                        <!-- The featured image URL goes in the src attribute -->
+                        {% if "placeholder" in post.featured_image.url %}
+                        <img src="https://codeinstitute.s3.amazonaws.com/fullstack/blog/default.jpg" width="100%">
+                        {% else %}
+                        <img src=" {{ post.featured_image.url }} " width="100%">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col card mb-4  mt-3 left  top">
+                    <div class="card-body">
+                        <!-- The post content goes inside the card-text. -->
+                        <!-- Use the | safe filter inside the template tags -->
+                        <p class="card-text ">{{ post.content | safe }}</p>
+                        <div class="row">
+
+                            <div class="col-1">
+                                <!-- The number of likes goes before the closing strong tag -->
+                                <strong class="text-secondary"><i class="far fa-heart"></i> {{ post.number_of_likes }} </strong>
+                            </div>
+                            <div class="col-1">
+                                {% with comments.count as total_comments %}
+                                <strong class="text-secondary"><i class="far fa-comments"></i>
+                                    <!-- Our total_comments variable goes before the closing strong tag -->
+                                    {{ total_comments }}
+                                </strong>
+                                {% endwith %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <hr>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8 card mb-4  mt-3 ">
+                    <h3>Comments:</h3>
+                    <div class="card-body">
+                        <!-- We want a for loop inside the tags to iterate through each comment in comments -->
+                        {% for comment in comments %}
+                        <div class="comments" style="padding: 10px;">
+                            <p class="font-weight-bold">
+                                <!-- The commenter's name goes here. Check the model if you're not sure what that is -->
+                                {{ comment.name }}
+                                <span class=" text-muted font-weight-normal">
+                                    <!-- The comment's created date goes here -->
+                                    {{ comment.created_on }}
+                                </span> wrote:
+                            </p>
+                            <!-- The body of the comment goes before the | -->
+                            {{ comment.body | linebreaks }}
+                        </div>
+                        <!-- Our for loop ends here -->
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-md-4 card mb-4  mt-3 ">
+                    <div class="card-body">
+                        <!-- For later -->
+                    </div>
+                </div>
+            </div>
+        {% endblock content %}
+
+</div>
 </details>
 
 
