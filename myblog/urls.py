@@ -22,4 +22,5 @@ urlpatterns = [
     # empty path is default for home, it's including the urls file from theblog
     # directory and we're giving it a name
     path('', include('theblog.urls'), name='theblog_urls'),
+    path('accounts/', include('allauth.urls')),
 ]

@@ -711,20 +711,95 @@ views.py
 **Connect up URLs**
 
 theblog/urls.py  
-* path('<slug:slug>/', views.PostDetail.as_view(), name='post_detail'),
+        
+    path('<slug:slug>/', views.PostDetail.as_view(), name='post_detail'),
 
 
 **Add postdetail url into index.html**  
 index.html
-* <a href="{% url 'post_detail' post.slug %}" class="post-link">  
+
+     <a href="{% url 'post_detail' post.slug %}" class="post-link">    
 Here post_detail is the name we just created in the URLs file  
+
 
 **If you run it, it should work now**
 
+
 Move your two items on github projects from in progress to done.  
+
+</details>
+</details>
+
+
+
+<details>
+<summary><h1>LESSON 5: AUTHORISATION, COMMENTS AND LIKES</h1></summary>
+
+[CI videos](https://learn.codeinstitute.net/courses/course-v1:CodeInstitute+FST101+2021_T1/courseware/b31493372e764469823578613d11036b/dabfed30d1fc4d078b6de270117dbe50/?child=first)
+
+<details>
+<summary><h2>LESSON 5.1 + 5.2 : Authorisation</h2></summary>
+
+[starter files](https://github.com/Code-Institute-Solutions/django-blog-starter-files/tree/master/templates/account)  
+[Django AllAuth documentation](https://django-allauth.readthedocs.io/en/latest/)  
+
+<hr>
+
+* Move account registration to in progress in projects
+
+Django has built in authentication, used when we created the superuser  
+For this project though we're gonna use the user library allAuth  
+Why? You can send password and account confirmation emails enforcing password complexity and providing single sign-on using google or facebook
+
+**Let's set up allAuth**
+
+terminal:
+
+    pip3 install django-allauth
+    pip3 freeze --local > requirements.txt
+
+Add allAuth URLs to myblog/URLs.py file
+
+    path('accounts/', include('allauth.urls')),
+
+Add allauth to installed apps in settings.py
+
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+
+Add a site id of one so django can handle multiple sites (if there are multiple)
+
+    SITE_ID = 1
+
+Add redirects for login and logout
+
+    LOGIN_REDIRECT_URL = '/'
+    LOGOUT_REDIRECT_URL = '/'
+
+Do your migrations
+
+    python3 manage.py migrate
+
+
 
 </details>
 
 
 
+
+<details>
+<summary><h2>LESSON 5.3 + 5.4 : Comments</h2></summary>
+
+</details>
+
+
+
+
+
+<details>
+<summary><h2>LESSON 5.5 : Likes</h2></summary>
+
+</details>
 </details>
