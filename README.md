@@ -1036,16 +1036,50 @@ as class methods)
 
 * Add "commented": False to the render of the get class, so we can tell users comments are waiting approval
 
+Back to post_detail.html
+
+* this is the bit we added, but it was there from when I copied earlier... Oops again
+
+                {% if commented %}
+                <div class="alert alert-success" role="alert">
+                    Your comment is awaiting approval
+                </div>
+                {% else %}
 
 
+
+**consider how you could improve the comment function by displaying an error if the form is not correctly completed**
+#
 </details>
-
-
-
-
 
 <details>
 <summary><h2>LESSON 5.5 : Likes</h2></summary>
+
+**Create view code for likes**
+
+views.py
+
+* import reverse from shortcuts and HttpResponseRedirect from django.http
+* Create new class for likes
+
+
+        class PostLike(View):
+
+            def post(self, request, slug):
+                post = get_object_or_404(Post, slug=slug)
+                
+                # Check if the user has liked the post
+                if post.likes.filter(id=request.user.id).exists():
+                    # If it has, remove the like
+                    post.likes.remove(request.user)
+                else:
+                    # If it hasn't, add the like
+                    post.likes.add(request.user)
+
+                return HttpResponseRedirect(reverse('post_detail', args=[slug]))
+
+
+
 
 </details>
 </details>

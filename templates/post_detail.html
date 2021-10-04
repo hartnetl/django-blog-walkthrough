@@ -80,11 +80,13 @@
         <div class="col-md-4 card mb-4  mt-3 ">
             <div class="card-body">
                 <!-- CRISPY FORM BELOW-->
+                <!-- if commented boolean is set to true as per views.py get/post-->
                 {% if commented %}
                 <div class="alert alert-success" role="alert">
                     Your comment is awaiting approval
                 </div>
                 {% else %}
+                <!-- If commented is false the comment box appears -->
                 <!-- comment box only appears if user is authenticated -->
                 {% if user.is_authenticated %}
 
