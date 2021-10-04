@@ -1079,6 +1079,11 @@ views.py
                 return HttpResponseRedirect(reverse('post_detail', args=[slug]))
 
 
+post_detail.html
+
+* Add if statement for if post is liked show filled heart, if post isn't show outline heart.  
+Show outline if user isn't logged in.
+
 
 
 </details>

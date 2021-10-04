@@ -11,4 +11,6 @@ urlpatterns = [
     # PostDetail class in the theblog/views.py file. That's how we link them
     # together.
     path('<slug:slug>/', views.PostDetail.as_view(), name='post_detail'),
+    path('like/<slug:slug>', views.PostLike.as_view(), name='post_like'),
+
 ]
