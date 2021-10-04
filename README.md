@@ -907,11 +907,53 @@ This will create a couple of directories, but we're intersted in the accounts on
     </div>
 
     {% endblock %}
-    
+
+
+Copy the templates for signup and logout from the templates [here](https://github.com/Code-Institute-Solutions/django-blog-starter-files/tree/master/templates/account
+)
+
+Add account registration to complete
 </details>
 
 <details>
 <summary><h2>LESSON 5.3 + 5.4 : Comments</h2></summary>
+
+[Django Crispy Forms Documentation](https://django-crispy-forms.readthedocs.io/en/latest/index.html)
+[CSRF further reading](https://docs.djangoproject.com/en/3.2/ref/csrf/)
+[Source code](https://github.com/Code-Institute-Solutions/Django3blog/tree/master/09_commenting)
+
+<hr>
+
+Backend for the comments is largely done by now - we have our model, they can be added in the admin panel and they can be approved or disapproved.  
+We're going to use the form library Crispy Forms for formatting.
+
+* install crispy forms
+
+        pip3 install django-crispy-forms  
+        pip3 freeze --local > requirements.txt
+
+* add crispy to settings.py
+
+        'crispy_forms',
+
+* tell Crispy to use  Bootstrap classes for formatting in settings.py 
+
+        CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+* Create forms class
+    * create forms.py in theblog directory
+
+            from .models import Comment
+            from django import forms
+
+
+            class CommentForm(forms.ModelForm):
+                # The meta class says which model to use and which fields to display
+                class Meta:
+                    model = Comment
+                    # THIS COMMA BELOW IS V IMPORTANT, IT'S A TUPLE NOT A STRING
+                    fields = ('body',)
+
 
 </details>
 
