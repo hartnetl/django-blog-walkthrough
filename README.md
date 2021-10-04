@@ -705,9 +705,24 @@ views.py
                     </div>
                 </div>
             </div>
+            </div>
         {% endblock content %}
 
-</div>
+**Connect up URLs**
+
+theblog/urls.py  
+* path('<slug:slug>/', views.PostDetail.as_view(), name='post_detail'),
+
+
+**Add postdetail url into index.html**  
+index.html
+* <a href="{% url 'post_detail' post.slug %}" class="post-link">  
+Here post_detail is the name we just created in the URLs file  
+
+**If you run it, it should work now**
+
+Move your two items on github projects from in progress to done.  
+
 </details>
 
 
