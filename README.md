@@ -782,12 +782,92 @@ Do your migrations
 
     python3 manage.py migrate
 
+Run your page and go to accounts/signup and signup. You should be redirected to the home page after.
+
+**Let's make the logout button work**
+
+base.html
+* Change your navigation links
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account_signup' %}">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account_login' %}">Login</a>
+                    </li>
+
+If you run it again, you should be able to logout
+
+
+**Check your version of python**
+
+    ls ../.pip-modules/lib
+
+This has been done using version 3.8
+
+We want to copy files from the allauth library into our templates direectory
+
+    cp -r ../.pip-modules/lib/python3.8/site-packages/allauth/templates/* ./templates
+
+This will create a couple of directories, but we're intersted in the accounts one (that we weren't supposed to copy at the start but we did... oops)
+
+**Let's customise the login.html in accounts directory**
+
+**Before**
+
+    {% extends "account/base.html" %}
+
+    {% load i18n %}
+    {% load account socialaccount %}
+
+    {% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+    {% block content %}
+
+    <h1>{% trans "Sign In" %}</h1>
+
+    {% get_providers as socialaccount_providers %}
+
+    {% if socialaccount_providers %}
+    <p>{% blocktrans with site.name as site_name %}Please sign in with one
+    of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a>
+    for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
+
+    <div class="socialaccount_ballot">
+
+    <ul class="socialaccount_providers">
+        {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+    </ul>
+
+    <div class="login-or">{% trans 'or' %}</div>
+
+    </div>
+
+    {% include "socialaccount/snippets/login_extra.html" %}
+
+    {% else %}
+    <p>{% blocktrans %}If you have not created an account yet, then please
+    <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+    {% endif %}
+
+    <form class="login" method="POST" action="{% url 'account_login' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% if redirect_field_value %}
+    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+    {% endif %}
+    <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+    <button class="primaryAction" type="submit">{% trans "Sign In" %}</button>
+    </form>
+
+    {% endblock %}
 
 
 </details>
-
-
-
 
 <details>
 <summary><h2>LESSON 5.3 + 5.4 : Comments</h2></summary>
