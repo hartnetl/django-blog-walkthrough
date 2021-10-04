@@ -577,6 +577,13 @@ Now import these URLs in the main URLs.py file in myblog directory
 <details>
 <summary><h2>LESSON 4.3 + 4.4:The Post Detail View</h2></summary>
 
+[Django path converters](https://docs.djangoproject.com/en/3.2/topics/http/urls/#how-django-processes-a-request)
+
+<hr>
+
+* Move "site pagination", "view post" and "view likes" to complete on github projects
+* Move view comments and open a post to 'in progress'
+
 </details>
 
 
