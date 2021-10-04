@@ -954,6 +954,89 @@ We're going to use the form library Crispy Forms for formatting.
                     # THIS COMMA BELOW IS V IMPORTANT, IT'S A TUPLE NOT A STRING
                     fields = ('body',)
 
+Go to views.py to import form and create view I suppose
+
+    from .forms import CommentForm
+
+Add this line to the PostDetail render
+
+    "comment_form": CommentForm()
+
+
+Go to post_detail.html
+
+* Add this to the top of the file, under block content
+
+        {% load crispy_forms_tags %}
+
+* Copy code from the source code and paste it in under the for later (Changed to CRISPY FORMS comment)
+
+                {% if commented %}
+                <div class="alert alert-success" role="alert">
+                    Your comment is awaiting approval
+                </div>
+                {% else %}
+                {% if user.is_authenticated %}
+
+                <h3>Leave a comment:</h3>
+                <p>Posting as: {{ user.username }}</p>
+                <form method="post" style="margin-top: 1.3em;">
+                    {{ comment_form | crispy }}
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-signup btn-lg">Submit</button>
+                </form>
+                {% endif %}
+                {% endif %}
+
+
+**Now if you run the page, the comments box will appear when you're logged in, but not when you're not**  
+
+* Add Post method to PostDetail class in views.py (because when using class based views, GET and PSOT are supplied
+as class methods)
+
+        def post(self, request, slug, *args, **kwargs):
+                queryset = Post.objects.filter(status=1)
+                post = get_object_or_404(queryset, slug=slug)
+                comments = post.comments.filter(approved=True).order_by('created_on')
+                liked = False
+                if post.likes.filter(id=self.request.user.id).exists():
+                    liked = True
+
+            # Get data from form and assign it to a variable
+                comment_form = CommentForm(data=request.POST)
+
+                # our form has a method called 'is_valid' that returns a Boolean value
+                # regarding whether the form is valid, as in  all the fields have been
+                # completed or not. If it is valid, a comment has been  left and we
+                # want to process it. 
+                if comment_form.is_valid():
+                    # set email and username automatically from logged in user
+                    comment_form.instance.email = request.user.email
+                    comment_form.instance.name = request.user.username
+                    comment = comment_form.save(commit=False)
+
+                    # We need to assign the comment to a post before it can be committed
+                    comment.post = post
+                    comment.save()
+                else:
+                    comment_form = CommentForm()
+
+                # render it
+                return render(
+                    request,
+                    "post_detail.html",
+                    {
+                        "post": post,
+                        "comments": comments,
+                        "commented": True,
+                        "liked": liked,
+                        "comment_form": CommentForm()
+                    },
+                )
+
+* Add "commented": False to the render of the get class, so we can tell users comments are waiting approval
+
+
 
 </details>
 
