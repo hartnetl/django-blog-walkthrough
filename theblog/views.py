@@ -71,7 +71,7 @@ class PostDetail(View):
             # We need to assign the comment to a post before it can be committed
             comment.post = post
             comment.save()
-            messages.success(request, "Your comment is pending approval. Please be patient.")
+            messages.success(request, "Your comment was sent successfully. Check status below.")
         else:
             comment_form = CommentForm()
 
