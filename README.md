@@ -1088,3 +1088,50 @@ Show outline if user isn't logged in.
 
 </details>
 </details>
+
+
+<details>
+<summary><h1>LESSON 6: MESSAGES AND TIDYING UP</h1></summary>
+
+<details>
+<summary><h2>LESSON 6.1: Messages</h2></summary>
+
+[Bootstrap Alert documentation](https://getbootstrap.com/docs/5.0/components/alerts/)
+[Using messages in Django](https://docs.djangoproject.com/en/3.2/ref/contrib/messages/#using-messages-in-views-and-templates)
+
+<hr>
+
+Messages can be flashed onto the screen after user actions to provide feedback, and JS can be used to automatically dismiss them
+
+settings.py
+
+* Under imports
+    
+        from django.contrib.messages import constants as messages
+
+
+* Under the LOGOUT_REDIRECT_URL
+
+        MESSAGE_TAGS = {
+            messages.DEBUG: 'alert-info',
+            messages.INFO: 'alert-info',
+            messages.SUCCESS: 'alert-success',
+            messages.WARNING: 'alert-warning',
+            messages.ERROR: 'alert-danger',
+        }
+
+
+**Add message display**  
+base.html
+* f
+
+
+</details>
+
+
+<details>
+<summary><h2>LESSON 6.2: Final Deployment</h2></summary>
+
+</details>
+
+</details>
