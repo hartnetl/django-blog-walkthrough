@@ -1138,7 +1138,30 @@ base.html
             </div>
         </div>
 
-*
+* Add custom js to bottom of base.html
+
+        <script>
+            // close alerts automatically
+            setTimeout(function() {
+                let messages = document.getElementById('msg');
+                // Assign a new bootstrap alert to alert
+                let alert = new bootstrap.Alert(messages);
+                // This is part of the bootstrap/js toolkit
+                alert.close();
+                // close the alert after 3000ms or 3 s
+            }, 3000);
+
+        </script>
+
+
+**Add success message when comment is posted**
+
+views.py
+* Add this line to the comment.post section of the post method
+
+        messages.success(request, "Your comment was sent successfully. Check status below.")
+
+Your page should now display an auto closing success message when you post a comment
 
 
 </details>
@@ -1146,6 +1169,14 @@ base.html
 
 <details>
 <summary><h2>LESSON 6.2: Final Deployment</h2></summary>
+
+[What is CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
+[configuring Social Sign-on](https://django-allauth.readthedocs.io/en/latest/providers.html#google)
+
+<hr>
+
+When it comes to deployment with Django  there's one thing you always need to remember. 
+The debug flag **must be set to False** in settings.py.
 
 </details>
 

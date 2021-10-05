@@ -61,7 +61,7 @@ class PostDetail(View):
         # our form has a method called 'is_valid' that returns a Boolean value
         # regarding whether the form is valid, as in  all the fields have been
         # completed or not. If it is valid, a comment has been  left and we
-        # want to process it. 
+        # want to process it.
         if comment_form.is_valid():
             # set email and username automatically from logged in user
             comment_form.instance.email = request.user.email
