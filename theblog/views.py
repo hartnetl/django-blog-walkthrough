@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, reverse
 from django.views import generic, View
 from django.http import HttpResponseRedirect
+from django.contrib import messages
 from .models import Post
 from .forms import CommentForm
 
@@ -70,6 +71,7 @@ class PostDetail(View):
             # We need to assign the comment to a post before it can be committed
             comment.post = post
             comment.save()
+            messages.success(request, "Your comment is pending approval. Please be patient.")
         else:
             comment_form = CommentForm()
 
