@@ -1178,6 +1178,31 @@ Your page should now display an auto closing success message when you post a com
 When it comes to deployment with Django  there's one thing you always need to remember. 
 The debug flag **must be set to False** in settings.py.
 
+If you leave it turned  on then a few things happen.  
+Firstly, YOU WILL FAIL YOUR PROJECT!!!  
+Secondly, Django will serve the static  files such as css files itself,  
+instead of relying on Cloudinary.
+This may seem like a small thing, but Django's designed to serve these files
+from another source such as a CDN. It impacts on performance  when it serves them itself.  
+Lastly, when debug is switched on, Django  gives you verbose error pages with a traceback.
+This traceback can reveal a lot about your code, it can even reveal credentials and  things that you want to keep secret.
+And obviously attackers can use  this to try compromise your site. Not a big deal for this project, but 
+future employers will care!
+
+Set debug to false in settings.py
+
+    DEBUG = FALSE
+
+Under that
+
+    X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+If we didn't set this, then our summer note editor would no  longer work when we deploy the project.
+That's because of a security feature known as  Cross-Origin Resource Sharing or CORS for short.
+CORS tells the browser what  resources are permitted to be loaded.
+Without this setting, our browser wouldn't  be able to load the Summernote editor,  
+which would render our blog a little useless.
+
 </details>
 
 </details>
