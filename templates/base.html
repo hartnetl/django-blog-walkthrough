@@ -57,6 +57,29 @@
         </div>
     </nav>
 
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <!-- Messages are built into Django so you don't need to make a 
+                    view for them, and we're gonna make a for loop to iterate
+                    through each message -->
+                {% for message in messages %}
+
+                <!-- This is the message tag we assigned in settigns.py and other
+                regular bootstrap classes -->
+                <div class="alert {{ message.tags }} alert-dismissible fade show" id="msg" role="alert">
+                    {{ message  |  safe }}
+                    <!-- These are all bootstrap alert classes, check the documentation in lesson 6.1 for more info -->
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+
     <main class="flex-shrink-0 main-bg">
         {% block content %}
         <!-- Content Goes here -->
