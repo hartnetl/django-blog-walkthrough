@@ -94,6 +94,19 @@
             <i class="fab fa-instagram-square ms-3"></i>
             <i class="fab fa-youtube-square ms-3"></i></p>
     </footer>
+
+    <script>
+        // close alerts automatically
+        setTimeout(function() {
+            let messages = document.getElementById('msg');
+            // Assign a new bootstrap alert to alert
+            let alert = new bootstrap.Alert(messages);
+            // This is part of the bootstrap/js toolkit
+            alert.close();
+            // close the alert after 3000ms or 3 s
+        }, 3000);
+    </script>
+
 </body>
 
 </html>
