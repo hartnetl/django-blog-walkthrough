@@ -1203,6 +1203,38 @@ CORS tells the browser what  resources are permitted to be loaded.
 Without this setting, our browser wouldn't  be able to load the Summernote editor,  
 which would render our blog a little useless.
 
+Go to heroku
+* Delete the disablestaticcollection config var we made a while back
+Deploy tab
+* Build branch
+
+It should now work away on heroku
+
 </details>
+
+</details>
+
+<details>
+<summary><h1>Final notes</h1></summary>
+
+Larger  applications will have more than one Django app.
+We just have one in this  project, which is the blog app.  
+Django apps are self-contained packages that  should do only one thing - for example a blog,  
+or a product catalog, or a booking  calendar, or well, anything really!  
+So when you come to make your own Django projects,  
+don't fall into the trap of putting  everything together in one app.  
+Also, don't fall into the trap of putting  all of your app logic in the views.py file.  
+It's perfectly okay - in fact encouraged - to put  
+logic in other files and just import  the bits that you need into your view.  
+
+
+THINGS THAT COULD IMPROVE THIS PROJECT 
+
+* Expand messaging system so error message displays when user submits empty comment form  
+* Use the social apps feature of AllAuth  to add single sign-on functionality using Google, Facebook, or another authentication provider
+* Build a number_of_comments  method. So that the number of comments can be shown on the front page  as well as the number of likes.
+*  combine  your knowledge of the JavaScript fetch API with your Django knowledge and  change the like functionality 
+so that it calls the like URL in the  background and doesn't reload the page.
+
 
 </details>
