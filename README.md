@@ -150,7 +150,7 @@ Back to gitpod
             import env  
     * secret key section
         * Change it to 
-            * SECRET_KEY = 'os.envrion.get('SECRET_KEY')
+            * SECRET_KEY = os.environ.get('SECRET_KEY')
 
 Let's wire up the postgres database  
 
